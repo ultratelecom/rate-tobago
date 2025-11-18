@@ -131,34 +131,34 @@ export default function SurveyPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-tobago-sand/30 to-white">
       {/* Header */}
-      <header className="bg-tobago-blue text-white py-6 shadow-lg sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-6">
-          <Link href="/" className="text-sm hover:underline mb-2 block">
+      <header className="bg-tobago-blue text-white py-4 sm:py-5 md:py-6 shadow-lg sticky top-0 z-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <Link href="/" className="text-xs sm:text-sm hover:underline mb-1 sm:mb-2 block">
             ← Back to Home
           </Link>
-          <h1 className="text-2xl md:text-3xl font-bold">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold leading-tight">
             Tobago Visitor Experience Survey
           </h1>
-          <p className="text-white/80 mt-1">
+          <p className="text-white/80 mt-0.5 sm:mt-1 text-xs sm:text-sm">
             Division of Tourism, Culture, Antiquities and Transportation
           </p>
         </div>
       </header>
 
       {/* Progress Bar */}
-      <div className="bg-white shadow-sm sticky top-[132px] md:top-[124px] z-40">
-        <div className="max-w-4xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-semibold text-tobago-blue">
+      <div className="bg-white shadow-sm sticky top-[112px] sm:top-[120px] md:top-[124px] z-40">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+            <span className="text-xs sm:text-sm font-semibold text-tobago-blue">
               Step {currentStep} of {TOTAL_STEPS}
             </span>
-            <span className="text-sm text-gray-600">
+            <span className="text-xs sm:text-sm text-gray-600">
               {Math.round((currentStep / TOTAL_STEPS) * 100)}% Complete
             </span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-3">
+          <div className="w-full bg-gray-200 rounded-full h-2.5 sm:h-3">
             <motion.div
-              className="bg-gradient-to-r from-tobago-teal to-tobago-blue h-3 rounded-full"
+              className="bg-gradient-to-r from-tobago-teal to-tobago-blue h-2.5 sm:h-3 rounded-full"
               initial={{ width: 0 }}
               animate={{ width: `${(currentStep / TOTAL_STEPS) * 100}%` }}
               transition={{ duration: 0.5 }}
@@ -168,7 +168,7 @@ export default function SurveyPage() {
       </div>
 
       {/* Form Content */}
-      <div className="max-w-4xl mx-auto px-6 py-12">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-10 md:py-12">
         {/* Validation Error Alert */}
         {validationError && (
           <motion.div
@@ -212,12 +212,12 @@ export default function SurveyPage() {
           </AnimatePresence>
 
           {/* Navigation Buttons */}
-          <div className="flex justify-between mt-12 gap-4">
+          <div className="flex flex-col sm:flex-row justify-between mt-8 sm:mt-10 md:mt-12 gap-3 sm:gap-4">
             <button
               type="button"
               onClick={prevStep}
               disabled={currentStep === 1}
-              className="px-8 py-3 bg-gray-300 text-gray-700 rounded-full font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400 transition-colors"
+              className="w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 bg-gray-300 text-gray-700 rounded-full font-semibold text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400 transition-colors order-2 sm:order-1"
             >
               ← Previous
             </button>
@@ -226,7 +226,7 @@ export default function SurveyPage() {
               <button
                 type="button"
                 onClick={nextStep}
-                className="px-8 py-3 bg-tobago-teal text-white rounded-full font-semibold hover:bg-tobago-blue transition-colors"
+                className="w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 bg-tobago-teal text-white rounded-full font-semibold text-sm sm:text-base hover:bg-tobago-blue transition-colors order-1 sm:order-2"
               >
                 Next →
               </button>
@@ -234,12 +234,12 @@ export default function SurveyPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-8 py-3 bg-tobago-coral text-white rounded-full font-semibold hover:bg-tobago-coral/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                className="w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 bg-tobago-coral text-white rounded-full font-semibold text-sm sm:text-base hover:bg-tobago-coral/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 order-1 sm:order-2"
               >
                 {isSubmitting ? (
                   <>
                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    Submitting...
+                    <span>Submitting...</span>
                   </>
                 ) : (
                   "Submit Survey"
@@ -250,13 +250,15 @@ export default function SurveyPage() {
         </form>
       </div>
 
-      {/* Background Image */}
-      <div className="fixed bottom-0 right-0 w-1/3 h-1/3 opacity-10 pointer-events-none z-0">
+      {/* Background Image - Desktop and Mobile Optimized */}
+      <div className="fixed bottom-0 right-0 w-full md:w-1/2 lg:w-1/3 h-1/4 md:h-1/3 opacity-5 md:opacity-10 pointer-events-none z-0">
         <Image
           src="/images/img_1.jpg"
-          alt="Tobago"
+          alt="Tobago decorative background"
           fill
-          className="object-cover"
+          className="object-cover object-center"
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          quality={75}
         />
       </div>
     </div>
