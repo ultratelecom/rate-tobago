@@ -58,7 +58,7 @@ export default function Step6Final({ form }: StepProps) {
             We appreciate your time in completing this survey. Your responses will help us ensure that Tobago remains <strong>Beyond Ordinary</strong> for all our visitors.
           </p>
           <p className="text-gray-600 mt-3 text-sm italic">
-            Click "Submit Survey" below to complete your submission.
+            Click &ldquo;Submit Survey&rdquo; below to complete your submission.
           </p>
         </div>
 

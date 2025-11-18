@@ -104,7 +104,7 @@ export default function Home() {
                 Share Your Experience
               </h3>
               <p className="text-gray-600">
-                Tell us about your visit to Tobago's beautiful beaches, attractions, and local experiences.
+                Tell us about your visit to Tobago&apos;s beautiful beaches, attractions, and local experiences.
               </p>
             </motion.div>
 

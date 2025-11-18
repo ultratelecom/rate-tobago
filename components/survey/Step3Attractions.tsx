@@ -107,7 +107,7 @@ export default function Step3Attractions({ form }: StepProps) {
       {fields.length === 0 && (
         <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
           <p className="text-blue-800 text-sm">
-            💡 <strong>Tip:</strong> Select the attractions you visited and rate your experience. You can skip this step if you didn't visit any attractions.
+            💡 <strong>Tip:</strong> Select the attractions you visited and rate your experience. You can skip this step if you didn&apos;t visit any attractions.
           </p>
         </div>
       )}
