@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model TouristAttraction {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  visits    AttractionVisit[]
+
+  @@map("tourist_attractions")
+}
+
+model SurveyResponse {
+  id                      String   @id @default(uuid())
+  groupSize               Int
+  cruiseVessel            String?
+  countryOfResidence      String
+  gender                  String
+  ageGroup                String
+  isFirstVisit            Boolean
+  spendingAmountTTD       Decimal? @db.Decimal(10, 2)
+  spendingAmountUSD       Decimal? @db.Decimal(10, 2)
+  portWelcomeSatisfaction String
+  customerServiceLevel    String
+  overallExperience       String   @db.Text
+  improvementSuggestions  String?  @db.Text
+  visitHighlight          String?  @db.Text
+  usedGuidedTour          String
+  transportationRating    String?
+  wouldVisitAgain         String
+  additionalFeedback      String?  @db.Text
+  promotionalEmail        String?
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+  attractionVisits        AttractionVisit[]
+
+  @@map("survey_responses")
+  @@index([createdAt])
+  @@index([countryOfResidence])
+  @@index([cruiseVessel])
+}
+
+model AttractionVisit {
+  id                    String             @id @default(uuid())
+  surveyResponseId      String
+  touristAttractionId   String
+  rating                String
+  createdAt             DateTime           @default(now())
+  surveyResponse        SurveyResponse     @relation(fields: [surveyResponseId], references: [id], onDelete: Cascade)
+  touristAttraction     TouristAttraction  @relation(fields: [touristAttractionId], references: [id], onDelete: Cascade)
+
+  @@map("attraction_visits")
+  @@unique([surveyResponseId, touristAttractionId])
+  @@index([surveyResponseId])
+  @@index([touristAttractionId])
+}
+
