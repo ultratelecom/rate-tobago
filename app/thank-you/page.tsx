@@ -19,7 +19,20 @@ export default function ThankYouPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-tobago-sky/30 via-tobago-sand/20 to-white flex items-center justify-center relative overflow-hidden py-8 sm:py-12">
+    <div className="min-h-screen relative flex items-center justify-center overflow-hidden py-8 sm:py-12">
+      {/* Full Background Image */}
+      <div className="fixed inset-0 z-0">
+        <Image
+          src="/images/img_2.jpg"
+          alt="Beautiful Tobago beach"
+          fill
+          className="object-cover object-center"
+          sizes="100vw"
+          quality={85}
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-tobago-blue/70 via-tobago-teal/60 to-tobago-blue/70" />
+      </div>
       {/* Confetti Effect */}
       {confetti.map((particle) => (
         <motion.div
@@ -53,7 +66,7 @@ export default function ThankYouPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="text-4xl sm:text-5xl md:text-6xl font-bold text-tobago-blue mb-4 sm:mb-6"
+          className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 sm:mb-6 drop-shadow-lg"
         >
           Thank You!
         </motion.h1>
@@ -64,11 +77,11 @@ export default function ThankYouPage() {
           transition={{ delay: 0.5, duration: 0.6 }}
           className="space-y-3 sm:space-y-4 mb-8 sm:mb-12 px-2"
         >
-          <p className="text-xl sm:text-2xl text-gray-700">
+          <p className="text-xl sm:text-2xl text-white drop-shadow-md">
             Your feedback has been successfully submitted.
           </p>
-          <p className="text-base sm:text-lg text-gray-600">
-            We truly appreciate you taking the time to share your experience with us. Your valuable insights will help us ensure that Tobago remains <span className="font-bold text-tobago-teal">Beyond Ordinary</span> for all our visitors.
+          <p className="text-base sm:text-lg text-white/95 drop-shadow-md">
+            We truly appreciate you taking the time to share your experience with us. Your valuable insights will help us ensure that Tobago remains <span className="font-bold text-tobago-sand">Beyond Ordinary</span> for all our visitors.
           </p>
         </motion.div>
 
@@ -115,23 +128,11 @@ export default function ThankYouPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.9, duration: 0.6 }}
-          className="text-gray-500 text-sm"
+          className="text-white/80 text-sm drop-shadow"
         >
           <p>Division of Tourism, Culture, Antiquities and Transportation</p>
           <p>Tobago House of Assembly</p>
         </motion.div>
-      </div>
-
-      {/* Background decoration - Desktop and Mobile Optimized */}
-      <div className="fixed bottom-0 left-0 w-full h-1/4 sm:h-1/3 md:h-2/5 opacity-3 sm:opacity-5 pointer-events-none">
-        <Image
-          src="/images/img_3.jpg"
-          alt="Tobago decorative background"
-          fill
-          className="object-cover object-bottom"
-          sizes="100vw"
-          quality={60}
-        />
       </div>
     </div>
   );
