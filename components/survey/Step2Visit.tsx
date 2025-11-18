@@ -65,7 +65,7 @@ export default function Step2Visit({ form }: StepProps) {
                 {...register("spendingAmountTTD", { 
                   setValueAs: (v) => v === "" ? null : parseFloat(v)
                 })}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-tobago-teal focus:outline-none transition-colors"
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-tobago-teal focus:outline-none transition-colors text-gray-900 bg-white placeholder:text-gray-400"
                 placeholder="e.g., 5000"
               />
               <p className="text-xs text-gray-500 mt-1">Average: TT$3,000 - TT$8,000</p>
@@ -79,7 +79,7 @@ export default function Step2Visit({ form }: StepProps) {
                 {...register("spendingAmountUSD", { 
                   setValueAs: (v) => v === "" ? null : parseFloat(v)
                 })}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-tobago-teal focus:outline-none transition-colors"
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-tobago-teal focus:outline-none transition-colors text-gray-900 bg-white placeholder:text-gray-400"
                 placeholder="e.g., 750"
               />
               <p className="text-xs text-gray-500 mt-1">Average: US$450 - US$1,200</p>

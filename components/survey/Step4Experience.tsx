@@ -69,7 +69,7 @@ export default function Step4Experience({ form }: StepProps) {
           <textarea
             {...register("overallExperience")}
             rows={5}
-            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-tobago-teal focus:outline-none transition-colors resize-none"
+            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-tobago-teal focus:outline-none transition-colors resize-none text-gray-900 bg-white placeholder:text-gray-400"
             placeholder="Share your thoughts about your visit..."
           />
           {errors.overallExperience && (
@@ -85,7 +85,7 @@ export default function Step4Experience({ form }: StepProps) {
           <textarea
             {...register("improvementSuggestions")}
             rows={4}
-            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-tobago-teal focus:outline-none transition-colors resize-none"
+            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-tobago-teal focus:outline-none transition-colors resize-none text-gray-900 bg-white placeholder:text-gray-400"
             placeholder="Your suggestions help us improve..."
           />
         </div>
@@ -98,7 +98,7 @@ export default function Step4Experience({ form }: StepProps) {
           <textarea
             {...register("visitHighlight")}
             rows={4}
-            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-tobago-teal focus:outline-none transition-colors resize-none"
+            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-tobago-teal focus:outline-none transition-colors resize-none text-gray-900 bg-white placeholder:text-gray-400"
             placeholder="Tell us about your favorite moment..."
           />
         </div>

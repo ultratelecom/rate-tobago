@@ -28,7 +28,7 @@ export default function Step1Demographics({ form }: StepProps) {
             min="1"
             max="100"
             {...register("groupSize", { valueAsNumber: true })}
-            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-tobago-teal focus:outline-none transition-colors"
+            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-tobago-teal focus:outline-none transition-colors text-gray-900 bg-white placeholder:text-gray-400"
             placeholder="Enter number"
           />
           {errors.groupSize && (
@@ -44,7 +44,7 @@ export default function Step1Demographics({ form }: StepProps) {
           <input
             type="text"
             {...register("cruiseVessel")}
-            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-tobago-teal focus:outline-none transition-colors"
+            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-tobago-teal focus:outline-none transition-colors text-gray-900 bg-white placeholder:text-gray-400"
             placeholder="Enter vessel name or leave blank"
           />
         </div>
@@ -56,9 +56,9 @@ export default function Step1Demographics({ form }: StepProps) {
           </label>
           <select
             {...register("countryOfResidence")}
-            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-tobago-teal focus:outline-none transition-colors bg-white cursor-pointer"
+            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-tobago-teal focus:outline-none transition-colors bg-white cursor-pointer text-gray-900"
           >
-            <option value="">-- Select your country --</option>
+            <option value="" className="text-gray-500">-- Select your country --</option>
             {COUNTRIES.map((country) => (
               <option key={country} value={country}>
                 {country}
