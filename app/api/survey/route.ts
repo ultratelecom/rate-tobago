@@ -5,9 +5,11 @@ import { surveySchema } from "@/lib/validations";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+    console.log("Received survey data:", JSON.stringify(body, null, 2));
     
     // Validate the request body
     const validatedData = surveySchema.parse(body);
+    console.log("Validation successful");
 
     // Create the survey response
     const surveyResponse = await prisma.surveyResponse.create({
@@ -32,9 +34,11 @@ export async function POST(request: NextRequest) {
         promotionalEmail: validatedData.promotionalEmail || null,
       },
     });
+    console.log("Survey response created with ID:", surveyResponse.id);
 
     // Create attraction visits if any
     if (validatedData.attractionVisits && validatedData.attractionVisits.length > 0) {
+      console.log(`Creating ${validatedData.attractionVisits.length} attraction visits`);
       for (const visit of validatedData.attractionVisits) {
         // Find or create the attraction
         let attraction = await prisma.touristAttraction.findUnique({
@@ -45,6 +49,7 @@ export async function POST(request: NextRequest) {
           attraction = await prisma.touristAttraction.create({
             data: { name: visit.attractionName },
           });
+          console.log(`Created new attraction: ${visit.attractionName}`);
         }
 
         // Create the visit record
@@ -56,8 +61,10 @@ export async function POST(request: NextRequest) {
           },
         });
       }
+      console.log("All attraction visits created successfully");
     }
 
+    console.log("Survey submission completed successfully");
     return NextResponse.json(
       { 
         success: true, 
@@ -69,15 +76,34 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Error submitting survey:", error);
     
-    if (error instanceof Error && error.name === "ZodError") {
+    // Handle Zod validation errors
+    if (error && typeof error === 'object' && 'name' in error && error.name === "ZodError") {
+      const zodError = error as any;
+      const errorMessages = zodError.errors?.map((e: any) => `${e.path.join('.')}: ${e.message}`).join(', ');
+      console.error("Validation errors:", errorMessages);
       return NextResponse.json(
-        { success: false, error: "Invalid form data" },
+        { success: false, error: `Validation failed: ${errorMessages}` },
         { status: 400 }
       );
     }
 
+    // Handle Prisma errors
+    if (error && typeof error === 'object' && 'code' in error) {
+      const prismaError = error as any;
+      console.error("Prisma error code:", prismaError.code);
+      
+      if (prismaError.code === 'P2002') {
+        return NextResponse.json(
+          { success: false, error: "Duplicate entry detected" },
+          { status: 409 }
+        );
+      }
+    }
+
+    // Generic error
+    const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
     return NextResponse.json(
-      { success: false, error: "Failed to submit survey" },
+      { success: false, error: `Failed to submit survey: ${errorMessage}` },
       { status: 500 }
     );
   }

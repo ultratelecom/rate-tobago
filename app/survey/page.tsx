@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { surveySchema, type SurveyFormData } from "@/lib/validations";
+import { surveySchema, type SurveyFormData, getStepFields } from "@/lib/validations";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -22,10 +22,12 @@ const TOTAL_STEPS = 6;
 export default function SurveyPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [validationError, setValidationError] = useState<string | null>(null);
   const router = useRouter();
 
   const form = useForm<SurveyFormData>({
     resolver: zodResolver(surveySchema),
+    mode: "onBlur", // Validate on blur for better UX
     defaultValues: {
       groupSize: 1,
       gender: "Prefer not to say",
@@ -44,14 +46,32 @@ export default function SurveyPage() {
     },
   });
 
-  const nextStep = () => {
-    if (currentStep < TOTAL_STEPS) {
-      setCurrentStep(currentStep + 1);
+  const nextStep = async () => {
+    // Clear any previous validation error
+    setValidationError(null);
+
+    // Get fields for current step
+    const fieldsToValidate = getStepFields(currentStep);
+    
+    // Trigger validation for current step fields
+    const isStepValid = await form.trigger(fieldsToValidate as any);
+    
+    if (isStepValid) {
+      // Move to next step if validation passes
+      if (currentStep < TOTAL_STEPS) {
+        setCurrentStep(currentStep + 1);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    } else {
+      // Show validation error message
+      setValidationError("Please fill in all required fields correctly before proceeding.");
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   const prevStep = () => {
+    // Clear validation error when going back
+    setValidationError(null);
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -60,7 +80,11 @@ export default function SurveyPage() {
 
   const onSubmit = async (data: SurveyFormData) => {
     setIsSubmitting(true);
+    setValidationError(null);
+    
     try {
+      console.log("Submitting survey data:", data);
+      
       const response = await fetch("/api/survey", {
         method: "POST",
         headers: {
@@ -70,15 +94,16 @@ export default function SurveyPage() {
       });
 
       const result = await response.json();
+      console.log("Survey submission result:", result);
 
       if (result.success) {
         router.push("/thank-you");
       } else {
-        alert("Failed to submit survey. Please try again.");
+        setValidationError(result.error || "Failed to submit survey. Please try again.");
       }
     } catch (error) {
       console.error("Error submitting survey:", error);
-      alert("An error occurred. Please try again.");
+      setValidationError("An error occurred while submitting your survey. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -144,6 +169,35 @@ export default function SurveyPage() {
 
       {/* Form Content */}
       <div className="max-w-4xl mx-auto px-6 py-12">
+        {/* Validation Error Alert */}
+        {validationError && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-r-lg"
+          >
+            <div className="flex items-start">
+              <div className="flex-shrink-0">
+                <svg className="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div className="ml-3">
+                <p className="text-sm font-medium text-red-800">{validationError}</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setValidationError(null)}
+                className="ml-auto flex-shrink-0 text-red-500 hover:text-red-700"
+              >
+                <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </button>
+            </div>
+          </motion.div>
+        )}
+
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <AnimatePresence mode="wait">
             <motion.div
