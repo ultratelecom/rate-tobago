@@ -129,9 +129,22 @@ export default function SurveyPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-tobago-sand/30 to-white">
+    <div className="min-h-screen relative">
+      {/* Full Background Image */}
+      <div className="fixed inset-0 z-0">
+        <Image
+          src="/images/img_5.jpg"
+          alt="Tobago landscape"
+          fill
+          className="object-cover object-center"
+          sizes="100vw"
+          quality={85}
+        />
+        <div className="absolute inset-0 bg-white/90" />
+      </div>
+
       {/* Header */}
-      <header className="bg-tobago-blue text-white py-4 sm:py-5 md:py-6 shadow-lg sticky top-0 z-50">
+      <header className="bg-tobago-blue text-white py-4 sm:py-5 md:py-6 shadow-lg sticky top-0 z-50 relative">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <Link href="/" className="text-xs sm:text-sm hover:underline mb-1 sm:mb-2 block">
             ← Back to Home
@@ -146,7 +159,7 @@ export default function SurveyPage() {
       </header>
 
       {/* Progress Bar */}
-      <div className="bg-white shadow-sm sticky top-[112px] sm:top-[120px] md:top-[124px] z-40">
+      <div className="bg-white shadow-sm sticky top-[112px] sm:top-[120px] md:top-[124px] z-40 relative">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between mb-1.5 sm:mb-2">
             <span className="text-xs sm:text-sm font-semibold text-tobago-blue">
@@ -168,7 +181,7 @@ export default function SurveyPage() {
       </div>
 
       {/* Form Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-10 md:py-12">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-10 md:py-12 relative z-10">
         {/* Validation Error Alert */}
         {validationError && (
           <motion.div
@@ -249,7 +262,6 @@ export default function SurveyPage() {
           </div>
         </form>
       </div>
-
     </div>
   );
 }
