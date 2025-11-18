@@ -8,7 +8,8 @@ interface StepProps {
 }
 
 export default function Step2Visit({ form }: StepProps) {
-  const { register, formState: { errors }, watch } = form;
+  const { register, formState: { errors }, watch, setValue } = form;
+  const isFirstVisit = watch("isFirstVisit");
 
   return (
     <div className="bg-white rounded-2xl shadow-lg p-8">
@@ -23,22 +24,26 @@ export default function Step2Visit({ form }: StepProps) {
             Is this your first visit to Tobago? *
           </label>
           <div className="space-y-2">
-            {[
-              { value: true, label: "Yes" },
-              { value: false, label: "No" },
-            ].map((option) => (
-              <label key={option.label} className="flex items-center space-x-3 cursor-pointer">
-                <input
-                  type="radio"
-                  value={option.value.toString()}
-                  {...register("isFirstVisit", {
-                    setValueAs: (v) => v === "true",
-                  })}
-                  className="w-5 h-5 text-tobago-teal focus:ring-tobago-teal"
-                />
-                <span className="text-gray-700">{option.label}</span>
-              </label>
-            ))}
+            <label className="flex items-center space-x-3 cursor-pointer hover:bg-tobago-sand/20 p-2 rounded transition-colors">
+              <input
+                type="radio"
+                value="true"
+                checked={isFirstVisit === true}
+                onChange={() => setValue("isFirstVisit", true, { shouldValidate: true })}
+                className="w-5 h-5 text-tobago-teal focus:ring-tobago-teal"
+              />
+              <span className="text-gray-700">Yes</span>
+            </label>
+            <label className="flex items-center space-x-3 cursor-pointer hover:bg-tobago-sand/20 p-2 rounded transition-colors">
+              <input
+                type="radio"
+                value="false"
+                checked={isFirstVisit === false}
+                onChange={() => setValue("isFirstVisit", false, { shouldValidate: true })}
+                className="w-5 h-5 text-tobago-teal focus:ring-tobago-teal"
+              />
+              <span className="text-gray-700">No</span>
+            </label>
           </div>
         </div>
 
