@@ -2,6 +2,7 @@
 
 import { UseFormReturn } from "react-hook-form";
 import { SurveyFormData } from "@/lib/validations";
+import { COUNTRIES } from "@/lib/countries";
 
 interface StepProps {
   form: UseFormReturn<SurveyFormData>;
@@ -53,12 +54,17 @@ export default function Step1Demographics({ form }: StepProps) {
           <label className="block text-gray-700 font-semibold mb-2">
             Which country are you a resident of? *
           </label>
-          <input
-            type="text"
+          <select
             {...register("countryOfResidence")}
-            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-tobago-teal focus:outline-none transition-colors"
-            placeholder="Enter country"
-          />
+            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-tobago-teal focus:outline-none transition-colors bg-white cursor-pointer"
+          >
+            <option value="">-- Select your country --</option>
+            {COUNTRIES.map((country) => (
+              <option key={country} value={country}>
+                {country}
+              </option>
+            ))}
+          </select>
           {errors.countryOfResidence && (
             <p className="text-red-500 text-sm mt-1">{errors.countryOfResidence.message}</p>
           )}

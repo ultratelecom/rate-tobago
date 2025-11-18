@@ -47,6 +47,9 @@ export default function Step2Visit({ form }: StepProps) {
           <label className="block text-gray-700 font-semibold mb-2">
             How much did you spend during your visit to Tobago?
           </label>
+          <p className="text-sm text-gray-600 mb-3">
+            Please provide an estimate of your total spending (accommodation, food, activities, shopping, etc.)
+          </p>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm text-gray-600 mb-1">TT$ (Trinidad & Tobago Dollars)</label>
@@ -58,8 +61,9 @@ export default function Step2Visit({ form }: StepProps) {
                   setValueAs: (v) => v === "" ? null : parseFloat(v)
                 })}
                 className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-tobago-teal focus:outline-none transition-colors"
-                placeholder="0.00"
+                placeholder="e.g., 5000"
               />
+              <p className="text-xs text-gray-500 mt-1">Average: TT$3,000 - TT$8,000</p>
             </div>
             <div>
               <label className="block text-sm text-gray-600 mb-1">US$ (US Dollars)</label>
@@ -71,8 +75,9 @@ export default function Step2Visit({ form }: StepProps) {
                   setValueAs: (v) => v === "" ? null : parseFloat(v)
                 })}
                 className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-tobago-teal focus:outline-none transition-colors"
-                placeholder="0.00"
+                placeholder="e.g., 750"
               />
+              <p className="text-xs text-gray-500 mt-1">Average: US$450 - US$1,200</p>
             </div>
           </div>
         </div>

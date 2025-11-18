@@ -250,17 +250,6 @@ export default function SurveyPage() {
         </form>
       </div>
 
-      {/* Background Image - Desktop and Mobile Optimized */}
-      <div className="fixed bottom-0 right-0 w-full md:w-1/2 lg:w-1/3 h-1/4 md:h-1/3 opacity-5 md:opacity-10 pointer-events-none z-0">
-        <Image
-          src="/images/img_1.jpg"
-          alt="Tobago decorative background"
-          fill
-          className="object-cover object-center"
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          quality={75}
-        />
-      </div>
     </div>
   );
 }
